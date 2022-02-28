@@ -18,7 +18,7 @@ namespace CARPDataGenerator.Models
         /// Identification for signatory or director
         /// not needed for person identification
         /// </summary>
-        public int? SIGNATORY_OR_DIRECTOR_ID { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_ID { get; set; }
 
         /// <summary>
         /// if identification record is for a signatory
@@ -72,5 +72,6 @@ namespace CARPDataGenerator.Models
 
         [MaxLength(length: 4000)]
         public string COMMENTS { get; set; }
+
     }
 }

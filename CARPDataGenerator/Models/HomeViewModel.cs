@@ -12,6 +12,7 @@ namespace CARPDataGenerator.Models
         public string to { get; set; }
 
         public int NoOfrecords { get; set; }
+        public string FundsTypeCode { get; set; }
 
         [Required]
         [MinLength(length: 4)]
@@ -21,6 +22,13 @@ namespace CARPDataGenerator.Models
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public bool FromAddForeignCurrency { get; set; }
+        public bool ToAddForeignCurrency { get; set; }
+
+        public bool forFTR { get; set; }
+        public bool fromentityaccount { get; set; }
+        public bool toentityaccount { get; set; }
 
     }
 }

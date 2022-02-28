@@ -8,6 +8,9 @@
 <form method="post">
     <div class="row">
         <div class="col-12">
+            <input type="text"  asp-for="codefromtrans"/>
+        </div>
+        <div class="col-12">
             Date Range:
 
             <div class="form-group">
@@ -19,8 +22,59 @@
                 <label for="end">End Date:</label>
                 <input type="date" class="form-control" id="end" asp-for="EndDate">
             </div>
+
+            <hr />
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" asp-for="forFTR">For ftr
+                </label>
+            </div>
+            <hr />
+
+            <div class="form-group">
+                <label for="num">Funds type code:</label>
+                <input type="text" class="form-control" id="funds" asp-for="FundsTypeCode">
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label for="num">Number of records:</label>
+                <input type="number" class="form-control" id="num" asp-for="NoOfrecords">
+            </div>
+            <hr />
+
+
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" asp-for="FromAddForeignCurrency">Add foreign currency transction to source -> t_from or t_from_my_client
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" asp-for="ToAddForeignCurrency">Add foreign currency transction to destination -> t_to or t_to_my_client
+                </label>
+            </div>
+
+            <hr />
         </div>
         <div class="col-12">
+
+            <hr />
+
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" asp-for="fromentityaccount">From Entity account
+                </label>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" asp-for="toentityaccount">To Entity account
+                </label>
+            </div>
+
+            <hr />
             <div class="form-check">
                 <label class="form-check-label">
                     <input type="radio" class="form-check-input" asp-for="from" value="frommyclientaccount">T_from_My_client -> from_account
@@ -31,6 +85,7 @@
                     <input type="radio" class="form-check-input" asp-for="from" value="fromaccount">t_from -> from_account
                 </label>
             </div>
+
             <div class="form-check">
                 <label class="form-check-label">
                     <input type="radio" class="form-check-input" asp-for="from" value="frommyclientperson">T_from_My_client -> from_person
@@ -41,18 +96,12 @@
                     <input type="radio" class="form-check-input" asp-for="from" value="fromperson">t_from -> from_person
                 </label>
             </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" asp-for="from" value="frommycliententity">T_from_My_client -> from_entity
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" asp-for="from" value="fromentity">t_from -> from_entity
-                </label>
-            </div>
-        </div>
 
+            
+        </div>
+        <div class="col-12">
+            <hr />
+        </div>
         <div class="col-12">
             <div class="form-check">
                 <label class="form-check-label">
@@ -74,18 +123,11 @@
                     <input type="radio" class="form-check-input" asp-for="to" value="toperson">t_to -> to_person
                 </label>
             </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" asp-for="to" value="tomycliententity">T_to_My_client -> to_entity
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" asp-for="to" value="toentity">t_to -> to_entity
-                </label>
-            </div>
+
         </div>
     </div>
+
+    <input type="submit" />
     
 </form>
 

@@ -36,6 +36,10 @@ namespace CARPDataGenerator.Models
         /// </summary>
         public bool? FOR_DIRECTOR_RECORD { get; set; }
 
+        /// <summary>
+        /// unique Identification for signatory or director
+        /// </summary>
+        public string SIGNATORY_OR_DIRECTOR_ID { get; set; }
 
 
         /// <summary>
@@ -83,29 +87,29 @@ namespace CARPDataGenerator.Models
 
 
 
-        // SIGNATORY PHONE -> type 't_phone'
+        // SIGNATORY OR DIRECTOR PHONE -> type 't_phone'
 
         /// <summary>
         /// Enumeration -> contact_type
         /// </summary>
-        public string SIGNATORY_TPH_CONTACT_TYPE { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_TPH_CONTACT_TYPE { get; set; }
 
         /// <summary>
         /// Enumeration -> communication_type
         /// </summary>
-        public string SIGNATORY_TPH_COMMUNICATION_TYPE { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_TPH_COMMUNICATION_TYPE { get; set; }
 
         [MaxLength(length: 4)]
-        public string SIGNATORY_COUNTRY_PREFIX { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_COUNTRY_PREFIX { get; set; }
 
         [MaxLength(length: 50)]
-        public string SIGNATORY_NUMBER { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_NUMBER { get; set; }
 
         [MaxLength(length: 10)]
-        public string SIGNATORY_TPH_EXTENSION { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_TPH_EXTENSION { get; set; }
 
         [MaxLength(length: 4000)]
-        public string SIGNATORY_PHONE_COMMENTS { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_PHONE_COMMENTS { get; set; }
 
         // SIGNATORY PHONE END
 
@@ -116,30 +120,30 @@ namespace CARPDataGenerator.Models
         /// <summary>
         /// Enumeration -> contact_type
         /// </summary>
-        public string SIGNATORY_ADDRESS_TYPE { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_ADDRESS_TYPE { get; set; }
 
         [MaxLength(length: 100)]
-        public string SIGNATORY_ADDRESS { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_ADDRESS { get; set; }
 
         [MaxLength(length: 255)]
-        public string SIGNATORY_TOWN { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_TOWN { get; set; }
 
         [MaxLength(length: 255)]
-        public string SIGNATORY_CITY { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_CITY { get; set; }
 
         [MaxLength(length: 10)]
-        public string SIGNATORY_ZIP { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_ZIP { get; set; }
 
         /// <summary>
         /// Enumeration -> country_codes
         /// </summary>
-        public string SIGNATORY_COUNTRY_CODE { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_COUNTRY_CODE { get; set; }
 
         [MaxLength(length: 255)]
-        public string SIGNATORY_STATE { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_STATE { get; set; }
 
         [MaxLength(length: 25)]
-        public string SIGNATORY_ADDRESS_COMMENTS { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_ADDRESS_COMMENTS { get; set; }
 
         // SIGNATORY ADDRESS NODE END -> TYPE 't_address'
 
@@ -239,7 +243,7 @@ namespace CARPDataGenerator.Models
 
         // identification (can include multiple records for the same signatory) -> type 't_person_identification' on table 
 
-        public bool DECEASED { get; set; }
+        public bool? DECEASED { get; set; }
         public DateTime? DECEASED_DATE { get; set; }
 
         [MaxLength(length: 100)]
@@ -252,6 +256,7 @@ namespace CARPDataGenerator.Models
         public string SOURCE_OF_WEALTH { get; set; }
 
         [MaxLength(length: 4000)]
-        public string SIGNATORY_COMMENTS { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_COMMENTS { get; set; }
+
     }
 }

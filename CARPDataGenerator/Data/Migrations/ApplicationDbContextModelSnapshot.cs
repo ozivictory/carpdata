@@ -19,6 +19,42 @@ namespace CARPDataGenerator.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CARPDataGenerator.Models.AccountStatusType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupAccountStatusType");
+                });
+
+            modelBuilder.Entity("CARPDataGenerator.Models.AccountType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupAccountType");
+                });
+
             modelBuilder.Entity("CARPDataGenerator.Models.CTR", b =>
                 {
                     b.Property<int>("ID")
@@ -30,7 +66,8 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("AUTHORIZED")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<double?>("BALANCE")
                         .HasColumnType("float");
@@ -58,17 +95,8 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<DateTime?>("DATE_POSTING")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("DECEASED")
+                    b.Property<bool?>("DECEASED")
                         .HasColumnType("bit");
-
-                    b.Property<double?>("FOREIGN_AMOUNT")
-                        .HasColumnType("float");
-
-                    b.Property<string>("FOREIGN_CURRENCY")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FOREIGN_EX_RATE")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_ACCOUNT")
                         .HasColumnType("nvarchar(50)")
@@ -87,8 +115,11 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasMaxLength(255);
 
                     b.Property<string>("FROM_CLIENT_NUMBER")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
+
+                    b.Property<string>("FROM_COUNTRY")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_CURRENCY_CODE")
                         .HasColumnType("nvarchar(max)");
@@ -200,8 +231,14 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
-                    b.Property<string>("FROM_FOREIGN_CURRENCY")
+                    b.Property<double?>("FROM_FOREIGN_AMOUNT")
+                        .HasColumnType("float");
+
+                    b.Property<string>("FROM_FOREIGN_CURRENCY_CODE")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("FROM_FOREIGN_EXCHANGE_RATE")
+                        .HasColumnType("float");
 
                     b.Property<string>("FROM_FUNDS_CODE")
                         .HasColumnType("nvarchar(max)");
@@ -443,7 +480,7 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
-                    b.Property<bool>("LATE_DEPOSIT")
+                    b.Property<bool?>("LATE_DEPOSIT")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("OPENED")
@@ -453,7 +490,8 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TELLER")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("TO_ACCOUNT")
                         .HasColumnType("nvarchar(50)")
@@ -483,11 +521,14 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasMaxLength(255);
 
                     b.Property<string>("TO_CLIENT_NUMBER")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
 
                     b.Property<DateTime?>("TO_CLOSED")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TO_CURRENCY_CODE")
                         .HasColumnType("nvarchar(max)");
@@ -602,8 +643,14 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
-                    b.Property<string>("TO_FOREIGN_CURRENCY")
+                    b.Property<double?>("TO_FOREIGN_AMOUNT")
+                        .HasColumnType("float");
+
+                    b.Property<string>("TO_FOREIGN_CURRENCY_CODE")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("TO_FOREIGN_EXCHANGE_RATE")
+                        .HasColumnType("float");
 
                     b.Property<string>("TO_FUNDS_CODE")
                         .HasColumnType("nvarchar(max)");
@@ -673,7 +720,7 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(4)")
                         .HasMaxLength(4);
 
-                    b.Property<bool>("TO_PERSON_DECEASED")
+                    b.Property<bool?>("TO_PERSON_DECEASED")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("TO_PERSON_DECEASED_DATE")
@@ -858,19 +905,29 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TRANSACTION_DESCRIPTION")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
 
                     b.Property<string>("TRANSACTION_LOCATION")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TRANSACTION_MODE_CODE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TRANSACTION_MODE")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("TRANSACTION_MODE_COMMENT")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("TRANSACTION_NUMBER")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("TRANS_CONDUCTOR")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("VALUE_DATE")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 
@@ -892,7 +949,25 @@ namespace CARPDataGenerator.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CommunicationType");
+                    b.ToTable("LookupCommunicationType");
+                });
+
+            modelBuilder.Entity("CARPDataGenerator.Models.ConductionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupConductionType");
                 });
 
             modelBuilder.Entity("CARPDataGenerator.Models.ContactType", b =>
@@ -910,7 +985,7 @@ namespace CARPDataGenerator.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactType");
+                    b.ToTable("LookupContactType");
                 });
 
             modelBuilder.Entity("CARPDataGenerator.Models.CountryCodes", b =>
@@ -928,7 +1003,112 @@ namespace CARPDataGenerator.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CountryCodes");
+                    b.ToTable("LookupCountryCodes");
+                });
+
+            modelBuilder.Entity("CARPDataGenerator.Models.Currencies", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupCurrencies");
+                });
+
+            modelBuilder.Entity("CARPDataGenerator.Models.EntityLegalFormType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupEntityLegalFormType");
+                });
+
+            modelBuilder.Entity("CARPDataGenerator.Models.FTR", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddressOfBeneficiary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressOfSender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CMO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("ForDestinationTransaction")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("ForSourceTransaction")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LinkedAccounts")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocalGovernment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurposeOfTransaction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReferenceNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistrationNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondLineAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FTR");
+                });
+
+            modelBuilder.Entity("CARPDataGenerator.Models.FundsType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupFundsType");
                 });
 
             modelBuilder.Entity("CARPDataGenerator.Models.IdentifierType", b =>
@@ -946,7 +1126,913 @@ namespace CARPDataGenerator.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentifierType");
+                    b.ToTable("LookupIdentifierType");
+                });
+
+            modelBuilder.Entity("CARPDataGenerator.Models.IndicatorType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupIndicatorType");
+                });
+
+            modelBuilder.Entity("CARPDataGenerator.Models.STR", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("AMOUNT_LOCAL")
+                        .HasColumnType("float");
+
+                    b.Property<string>("AUTHORIZED")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<double?>("BALANCE")
+                        .HasColumnType("float");
+
+                    b.Property<string>("BENEFICIARY")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("BENEFICIARY_COMMENT")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("CLOSED")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CODE_FROM_TRANS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DATE_BALANCE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DATE_GENERATED_FROM_DB")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DATE_POSTING")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("DECEASED")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FLAG_INDICATOR")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_ACCOUNT")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FROM_ACCOUNT_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("FROM_ACCOUNT_IBAN")
+                        .HasColumnType("nvarchar(34)")
+                        .HasMaxLength(34);
+
+                    b.Property<string>("FROM_ACCOUNT_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_CLIENT_NUMBER")
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
+
+                    b.Property<string>("FROM_COUNTRY")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_CURRENCY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_ENTITY_ADDRESS")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_ENTITY_ADDRESS_COMMENTS")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("FROM_ENTITY_ADDRESS_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_ENTITY_BUSINESS")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<bool?>("FROM_ENTITY_BUSINESS_CLOSED")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FROM_ENTITY_CITY")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_ENTITY_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("FROM_ENTITY_COMMERCIAL_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_ENTITY_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_ENTITY_COUNTRY_PREFIX")
+                        .HasColumnType("nvarchar(4)")
+                        .HasMaxLength(4);
+
+                    b.Property<DateTime?>("FROM_ENTITY_DATE_BUSINESS_CLOSED")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FROM_ENTITY_EMAIL")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_ENTITY_INCORPORATION_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FROM_ENTITY_INCORPORATION_DATE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FROM_ENTITY_INCORPORATION_LEGAL_FORM")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_ENTITY_INCORPORATION_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FROM_ENTITY_INCORPORATION_STATE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_ENTITY_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_ENTITY_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FROM_ENTITY_PHONE_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("FROM_ENTITY_STATE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_ENTITY_TAX_NUMBER")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_ENTITY_TAX_REG_NUMBER")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_ENTITY_TOWN")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_ENTITY_TPH_COMMUNICATION_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_ENTITY_TPH_CONTACT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_ENTITY_TPH_EXTENSION")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("FROM_ENTITY_URL")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_ENTITY_ZIP")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<double?>("FROM_FOREIGN_AMOUNT")
+                        .HasColumnType("float");
+
+                    b.Property<string>("FROM_FOREIGN_CURRENCY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("FROM_FOREIGN_EXCHANGE_RATE")
+                        .HasColumnType("float");
+
+                    b.Property<string>("FROM_FUNDS_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_FUNDS_COMMENT")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_INSTITUTION_BRANCH")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_INSTITUTION_CODE")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FROM_INSTITUTION_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_INSTITUTION_SWIFT")
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
+
+                    b.Property<bool?>("FROM_NON_BANK_INSTUTION")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FROM_PERSONAL_ACCOUNT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_ADDRESS")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_ADDRESS_COMMENTS")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("FROM_PERSON_ADDRESS_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_ALIAS")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime?>("FROM_PERSON_BIRTHDATE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FROM_PERSON_BIRTH_PLACE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_CITY")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("FROM_PERSON_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_COUNTRY_PREFIX")
+                        .HasColumnType("nvarchar(4)")
+                        .HasMaxLength(4);
+
+                    b.Property<DateTime?>("FROM_PERSON_DECEASED_DATE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FROM_PERSON_EMAIL1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMAIL2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMAIL3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMAIL4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMAIL5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_ADDRESS")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_ADDRESS_COMMENTS")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_ADDRESS_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_CITY")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_COUNTRY_PREFIX")
+                        .HasColumnType("nvarchar(4)")
+                        .HasMaxLength(4);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_PHONE_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_STATE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_TOWN")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_TPH_COMMUNICATION_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_TPH_CONTACT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_TPH_EXTENSION")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("FROM_PERSON_EMPLOYER_ZIP")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("FROM_PERSON_FIRST_NAME")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_GENDER")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_ID_NUMBER")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("FROM_PERSON_LAST_NAME")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_MIDDLE_NAME")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_MOTHERS_NAME")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_NATIONALITY1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_NATIONALITY2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_NATIONALITY3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FROM_PERSON_OCCUPATION")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_PASSPORT_COUNTRY")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("FROM_PERSON_PASSPORT_NUMBER")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("FROM_PERSON_PHONE_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("FROM_PERSON_PREFIX")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_RESIDENCE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_SOURCE_OF_WEALTH")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_SSN")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("FROM_PERSON_STATE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_TAX_NUMBER")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_TAX_REG_NUMBER")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FROM_PERSON_TITLE")
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("FROM_PERSON_TOWN")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FROM_PERSON_TPH_COMMUNICATION_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_TPH_CONTACT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_PERSON_TPH_EXTENSION")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("FROM_PERSON_ZIP")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<bool>("IsFlagged")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("LATE_DEPOSIT")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("OPENED")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("REASON_FOR_FLAGGING")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("STATUS_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TELLER")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("TO_ACCOUNT")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("TO_ACCOUNT_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("TO_ACCOUNT_IBAN")
+                        .HasColumnType("nvarchar(34)")
+                        .HasMaxLength(34);
+
+                    b.Property<string>("TO_ACCOUNT_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<double?>("TO_BALANCE")
+                        .HasColumnType("float");
+
+                    b.Property<string>("TO_BENEFICIARY")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_BENEFICIARY_COMMENT")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_CLIENT_NUMBER")
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
+
+                    b.Property<DateTime?>("TO_CLOSED")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_CURRENCY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TO_DATE_BALANCE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_ENTITY_ADDRESS")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_ENTITY_ADDRESS_COMMENTS")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("TO_ENTITY_ADDRESS_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_ENTITY_BUSINESS")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<bool?>("TO_ENTITY_BUSINESS_CLOSED")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TO_ENTITY_CITY")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_ENTITY_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("TO_ENTITY_COMMERCIAL_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_ENTITY_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_ENTITY_COUNTRY_PREFIX")
+                        .HasColumnType("nvarchar(4)")
+                        .HasMaxLength(4);
+
+                    b.Property<DateTime?>("TO_ENTITY_DATE_BUSINESS_CLOSED")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_ENTITY_EMAIL")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_ENTITY_INCORPORATION_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TO_ENTITY_INCORPORATION_DATE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_ENTITY_INCORPORATION_LEGAL_FORM")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_ENTITY_INCORPORATION_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("TO_ENTITY_INCORPORATION_STATE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_ENTITY_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_ENTITY_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("TO_ENTITY_PHONE_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("TO_ENTITY_STATE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_ENTITY_TAX_NUMBER")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_ENTITY_TAX_REG_NUMBER")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_ENTITY_TOWN")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_ENTITY_TPH_COMMUNICATION_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_ENTITY_TPH_CONTACT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_ENTITY_TPH_EXTENSION")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("TO_ENTITY_URL")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_ENTITY_ZIP")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<double?>("TO_FOREIGN_AMOUNT")
+                        .HasColumnType("float");
+
+                    b.Property<string>("TO_FOREIGN_CURRENCY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("TO_FOREIGN_EXCHANGE_RATE")
+                        .HasColumnType("float");
+
+                    b.Property<string>("TO_FUNDS_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_FUNDS_COMMENT")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_INSTITUTION_BRANCH")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_INSTITUTION_CODE")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("TO_INSTITUTION_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_INSTITUTION_SWIFT")
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
+
+                    b.Property<bool?>("TO_NON_BANK_INSTUTION")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("TO_OPENED")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_PERSONAL_ACCOUNT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_ADDRESS")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_ADDRESS_COMMENTS")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("TO_PERSON_ADDRESS_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_ALIAS")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime?>("TO_PERSON_BIRTHDATE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_PERSON_BIRTH_PLACE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_CITY")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("TO_PERSON_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_COUNTRY_PREFIX")
+                        .HasColumnType("nvarchar(4)")
+                        .HasMaxLength(4);
+
+                    b.Property<bool?>("TO_PERSON_DECEASED")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("TO_PERSON_DECEASED_DATE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_PERSON_EMAIL1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMAIL2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMAIL3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMAIL4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMAIL5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_ADDRESS")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_ADDRESS_COMMENTS")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_ADDRESS_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_CITY")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_COUNTRY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_COUNTRY_PREFIX")
+                        .HasColumnType("nvarchar(4)")
+                        .HasMaxLength(4);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_NAME")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_PHONE_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_STATE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_TOWN")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_TPH_COMMUNICATION_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_TPH_CONTACT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_TPH_EXTENSION")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("TO_PERSON_EMPLOYER_ZIP")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("TO_PERSON_FIRST_NAME")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_GENDER")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_ID_NUMBER")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("TO_PERSON_LAST_NAME")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_MIDDLE_NAME")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_MOTHERS_NAME")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_NATIONALITY1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_NATIONALITY2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_NATIONALITY3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("TO_PERSON_OCCUPATION")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_PASSPORT_COUNTRY")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("TO_PERSON_PASSPORT_NUMBER")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("TO_PERSON_PHONE_COMMENTS")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("TO_PERSON_PREFIX")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_RESIDENCE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_SOURCE_OF_WEALTH")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_SSN")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("TO_PERSON_STATE")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_TAX_NUMBER")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_TAX_REG_NUMBER")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TO_PERSON_TITLE")
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("TO_PERSON_TOWN")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TO_PERSON_TPH_COMMUNICATION_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_TPH_CONTACT_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_PERSON_TPH_EXTENSION")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("TO_PERSON_ZIP")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("TO_STATUS_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TRANSACTION_DATE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TRANSACTION_DESCRIPTION")
+                        .HasColumnType("nvarchar(4000)")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("TRANSACTION_LOCATION")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("TRANSACTION_MODE_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TRANSACTION_MODE_COMMENT")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("TRANSACTION_NUMBER")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("TRANS_CONDUCTOR")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("VALUE_DATE")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("TRANSACTIONS");
                 });
 
             modelBuilder.Entity("CARPDataGenerator.Models.TransactionPersonIdentification", b =>
@@ -992,8 +2078,8 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("SIGNATORY_OR_DIRECTOR_ID")
-                        .HasColumnType("int");
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_ID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TRANSACTION_NUMBER")
                         .IsRequired()
@@ -1025,7 +2111,7 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<bool>("DECEASED")
+                    b.Property<bool?>("DECEASED")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("DECEASED_DATE")
@@ -1165,59 +2251,62 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("RESIDENCE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SIGNATORY_ADDRESS")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_ADDRESS")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<string>("SIGNATORY_ADDRESS_COMMENTS")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_ADDRESS_COMMENTS")
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
-                    b.Property<string>("SIGNATORY_ADDRESS_TYPE")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_ADDRESS_TYPE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SIGNATORY_CITY")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_CITY")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<string>("SIGNATORY_COMMENTS")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_COMMENTS")
                         .HasColumnType("nvarchar(4000)")
                         .HasMaxLength(4000);
 
-                    b.Property<string>("SIGNATORY_COUNTRY_CODE")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_COUNTRY_CODE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SIGNATORY_COUNTRY_PREFIX")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_COUNTRY_PREFIX")
                         .HasColumnType("nvarchar(4)")
                         .HasMaxLength(4);
 
-                    b.Property<string>("SIGNATORY_NUMBER")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_ID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_NUMBER")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("SIGNATORY_PHONE_COMMENTS")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_PHONE_COMMENTS")
                         .HasColumnType("nvarchar(4000)")
                         .HasMaxLength(4000);
 
-                    b.Property<string>("SIGNATORY_STATE")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_STATE")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<string>("SIGNATORY_TOWN")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_TOWN")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<string>("SIGNATORY_TPH_COMMUNICATION_TYPE")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_TPH_COMMUNICATION_TYPE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SIGNATORY_TPH_CONTACT_TYPE")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_TPH_CONTACT_TYPE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SIGNATORY_TPH_EXTENSION")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_TPH_EXTENSION")
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
-                    b.Property<string>("SIGNATORY_ZIP")
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_ZIP")
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
