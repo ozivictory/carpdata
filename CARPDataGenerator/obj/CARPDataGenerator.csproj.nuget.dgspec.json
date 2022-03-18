@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\source\\repos\\CARPDataGenerator\\CARPDataGenerator\\CARPDataGenerator.csproj": {}
+    "C:\\Users\\Admin\\Source\\Repos\\ozivictory\\carpdata\\CARPDataGenerator\\CARPDataGenerator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\source\\repos\\CARPDataGenerator\\CARPDataGenerator\\CARPDataGenerator.csproj": {
+    "C:\\Users\\Admin\\Source\\Repos\\ozivictory\\carpdata\\CARPDataGenerator\\CARPDataGenerator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\CARPDataGenerator\\CARPDataGenerator\\CARPDataGenerator.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Source\\Repos\\ozivictory\\carpdata\\CARPDataGenerator\\CARPDataGenerator.csproj",
         "projectName": "CARPDataGenerator",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\CARPDataGenerator\\CARPDataGenerator\\CARPDataGenerator.csproj",
+        "projectPath": "C:\\Users\\Admin\\Source\\Repos\\ozivictory\\carpdata\\CARPDataGenerator\\CARPDataGenerator.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\source\\repos\\CARPDataGenerator\\CARPDataGenerator\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Source\\Repos\\ozivictory\\carpdata\\CARPDataGenerator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -87,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

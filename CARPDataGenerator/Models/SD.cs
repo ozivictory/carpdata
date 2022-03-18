@@ -51,7 +51,12 @@ namespace CARPDataGenerator.Models
     //public class Timezone
     //{
     //    public string offset { get; set; }
-    //    public string description { get; set; }
+    //    public string
+    //
+    //
+    //
+    //
+    //    ption { get; set; }
     //}
 
     //public class Login
@@ -277,13 +282,23 @@ namespace CARPDataGenerator.Models
             "Solution Limited", "Romans Enterprise", "Ottawa house",  "Seek hotels and suite",
             "Maxwell Roads", "Changes and Profit Enterprise" };
 
-        public static List<String> LegalForm = new List<string> { "A", "G", "B", "R", "G", "R", "B", "A" };
+        public static List<String> LegalForm = new List<string> { "LLC", "ORG", "PLC", "REG", "ORG", "REG", "PLC", "LLC" };
 
         public static List<String> ListOfBusiness = new List<string> { "Information Technology", "Corporate", "Construction", "Finance", "Rentals", "Technology", "Health", "Entertainment", "Information Technology", "Corporate", "Construction", "Finance", "Rentals", "Technology", "Health", "Entertainment" };
         public static List<String> StreetType = new List<string> { "Way", "Road", "Plot", "Office", "Way", "Road", "Plot", "Office" };
-        public static List<String> Gender = new List<string> { "M", "F", "M", "M", "F", "F", "M", "M" };
+        public static List<String> Gender = new List<string> { "M", "F", "M", "F", "M", "F", "M", "F" };
         public static List<String> Title = new List<string> { "Mr", "Mrs", "Dr", "Engr", "Prof", "Mr", "Mrs", "Dr", "Engr", "Prof" };
-
+        public static List<String> AccountType = new List<string> { "Savings", "Transit Account", "Current Business", "Fixed Deposit", "Current Personal", "Trading Account" };
+//D- 
+//E- 
+//P- 
+//O- Export Proceed Dorm
+//I- 
+//C- Call Deposit
+//L- 
+//T- Internal Account
+// B - Trust Account
+// Y - Escrow account"}
 
 
         public static DateTime GetRandomDate(DateTime startDate, DateTime endDate)
