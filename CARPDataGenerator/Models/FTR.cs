@@ -27,7 +27,7 @@ namespace CARPDataGenerator.Models
         [NotMapped]
         public string Nationality { get; set; }
         [NotMapped]
-        public string DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         [NotMapped]
         public string DateOfIncorporation { get; set; }
         [NotMapped]
@@ -39,7 +39,7 @@ namespace CARPDataGenerator.Models
         // --
         public string RegistrationNumber { get; set; }
         [NotMapped]
-        public string DateOfIssue { get; set; }
+        public DateTime? DateOfIssue { get; set; }
         [NotMapped]
         public string PlaceOfIssue { get; set; }
         [NotMapped]
