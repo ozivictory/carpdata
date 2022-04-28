@@ -17,8 +17,8 @@ namespace CARPDataGenerator.Models
         [NotMapped]
         public string InstitutionBranch { get; set; }
         // --
-        public string CustomerType { get; set; }
-        [NotMapped]
+        //public string CustomerType { get; set; }
+        //[NotMapped]
         public string SurnameOrNameOfOrganisation { get; set; }
         [NotMapped]
         public string FirstName { get; set; }
@@ -93,7 +93,7 @@ namespace CARPDataGenerator.Models
         // --
         public string AddressOfSender { get; set; }
 
-        public string CMO { get; set; }
+        //public string CMO { get; set; }
         public string TransactionNumber { get; set; }
         public string ReferenceNumber { get; set; }
 

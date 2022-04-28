@@ -8,10 +8,16 @@ namespace CARPDataGenerator.Models
     /// <summary>
     /// Super class for CTR and STR transactions
     /// </summary>
+  
     public class TRANSACTIONS
     {
         [MaxLength(length: 50)]
         public string TRANSACTION_NUMBER { get; set; }
+
+        /// <summary>
+        /// Used for FTR
+        /// </summary>
+        public string REFERENCE_NUMBER { get; set; }
 
         [MaxLength(length: 4000)]
         public string TRANSACTION_DESCRIPTION { get; set; }
@@ -43,12 +49,15 @@ namespace CARPDataGenerator.Models
         /// Enumeration - type conduction_type
         /// </summary>
         public string TRANSACTION_MODE_CODE { get; set; }
+        public string TRANSACTION_MODE_DESC { get; set; }
 
         /// <summary>
         /// Description if transaction mode code is 'O' (other)
         /// </summary>
         [MaxLength(length: 50)]
         public string TRANSACTION_MODE_COMMENT { get; set; }
+
+        public string PURPOSE_OF_TRANSACTION { get; set; }
 
 
 
@@ -72,9 +81,15 @@ namespace CARPDataGenerator.Models
 
         public string TRANS_CONDUCTOR { get; set; }
 
+        /// <summary>
+        /// USED WITH FTR
+        /// </summary>
+        public string FROM_CUSTOMER_TYPE { get; set; }
 
 
         #region FROM_ACCOUNT RECORD
+
+        public string FROM_CMO { get; set; }
 
         [MaxLength(length: 255)]
         public string FROM_INSTITUTION_NAME { get; set; }
@@ -89,6 +104,11 @@ namespace CARPDataGenerator.Models
 
         [MaxLength(length: 255)]
         public string FROM_INSTITUTION_BRANCH { get; set; }
+
+        /// <summary>
+        /// BRANCH or BRANCH CODE for CTR
+        /// </summary>
+        public string FROM_INSTITUTION_BRANCH_CODE { get; set; }
 
         [MaxLength(length: 50)]
         public string FROM_ACCOUNT { get; set; }
@@ -112,6 +132,8 @@ namespace CARPDataGenerator.Models
         /// </summary>
         public string FROM_PERSONAL_ACCOUNT_TYPE { get; set; }
 
+        public string FROM_PERSONAL_ACCOUNT_DESC { get; set; }
+
 
         // FROM_ACCOUNT ENTITY RECORD - BUSINESS ENTITY OWNING THE ACCOUNT {type 't_entity'}
         // entity record held in 'from entity records' region
@@ -129,6 +151,7 @@ namespace CARPDataGenerator.Models
         /// Enumeration -> account_status_type
         /// </summary>
         public string STATUS_CODE { get; set; }
+        public string STATUS_DESC { get; set; }
 
         [MaxLength(length: 100)]
         public string BENEFICIARY { get; set; }
@@ -425,6 +448,8 @@ namespace CARPDataGenerator.Models
         /// </summary>
         public string FROM_ENTITY_ADDRESS_TYPE { get; set; }
 
+        public string FROM_ENTITY_ADDRESS_DESC { get; set; }
+
         [MaxLength(length: 100)]
         public string FROM_ENTITY_ADDRESS { get; set; }
 
@@ -506,12 +531,20 @@ namespace CARPDataGenerator.Models
         public string TO_COUNTRY_CODE { get; set; }
 
         #region TO_ACCOUNT RECORD
+        public string TO_CMO { get; set; }
+
+        /// <summary>
+        /// USED WITH FTR
+        /// </summary>
+        public string TO_CUSTOMER_TYPE { get; set; }
 
         [MaxLength(length: 255)]
         public string TO_INSTITUTION_NAME { get; set; }
 
         [MaxLength(length: 50)]
         public string TO_INSTITUTION_CODE { get; set; }
+
+        public string TO_INSTITUTION_BRANCH_CODE { get; set; }
 
         [MaxLength(length: 11)]
         public string TO_INSTITUTION_SWIFT { get; set; }
@@ -543,6 +576,8 @@ namespace CARPDataGenerator.Models
         /// </summary>
         public string TO_PERSONAL_ACCOUNT_TYPE { get; set; }
 
+        public string TO_PERSONAL_ACCOUNT_DESC { get; set; }
+
 
         // TO_ACCOUNT ENTITY RECORD - BUSINESS ENTITY OWNING THE ACCOUNT {type 't_entity'}
         // entity record held in 'TO entity records' region
@@ -560,6 +595,7 @@ namespace CARPDataGenerator.Models
         /// Enumeration -> account_type
         /// </summary>
         public string TO_STATUS_CODE { get; set; }
+        public string TO_STATUS_DESC { get; set; }
 
         [MaxLength(length: 100)]
         public string TO_BENEFICIARY { get; set; }
@@ -856,6 +892,11 @@ namespace CARPDataGenerator.Models
         /// </summary>
         public string TO_ENTITY_ADDRESS_TYPE { get; set; }
 
+        /// <summary>
+        /// USED WITH FTR
+        /// </summary>
+        public string TO_ENTITY_ADDRESS_DESC { get; set; }
+
         [MaxLength(length: 100)]
         public string TO_ENTITY_ADDRESS { get; set; }
 
@@ -920,5 +961,5 @@ namespace CARPDataGenerator.Models
         public string CODE_FROM_TRANS { get; set; }
         public DateTime? DATE_GENERATED_FROM_DB { get; set; }
 
-    }
-}
+      }
+ }

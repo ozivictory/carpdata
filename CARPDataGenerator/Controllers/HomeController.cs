@@ -49,14 +49,17 @@ namespace CARPDataGenerator.Controllers
                     CTR ctr = new CTR();
                     FTR ftr = new FTR();
 
+
+                    Random rand = new Random();
                     // add report indicator
                     //ctr.ID = i;
                     // generate code
                     ctr.CODE_FROM_TRANS = homeVM.codefromtrans;
                     ctr.TRANSACTION_NUMBER = SD.GenerateTransCode(homeVM.codefromtrans).Replace("-", "").Replace("_", "");
+                    ctr.REFERENCE_NUMBER = "MRef-" + rand.Next(100008000, 800000000).ToString() + rand.Next(10, 99).ToString();
                     ctr.TRANSACTION_DESCRIPTION = homeVM.codefromtrans.ToUpper() + ":" + ctr.TRANSACTION_NUMBER;
 
-                    Random rand = new Random();
+                    
                     
                     ctr.TRANSACTION_LOCATION = SD.ListOfState[rand.Next(0, 19)];
                     ctr.TRANSACTION_DATE = SD.GetRandomDate(homeVM.StartDate, homeVM.EndDate);
@@ -73,8 +76,10 @@ namespace CARPDataGenerator.Controllers
                     // value_date
 
                     // transmode_code - conduction type // has 6 records
-                    ctr.TRANSACTION_MODE_CODE = _db.LookupConductionType.ToList().ElementAt(rand.Next(0, 5)).Description;
+                    ctr.TRANSACTION_MODE_DESC = _db.LookupConductionType.ToList().ElementAt(rand.Next(0, 5)).Description;
+                    ctr.TRANSACTION_MODE_CODE = _db.LookupConductionType.ToList().ElementAt(rand.Next(0, 5)).Item;
                     ctr.TRANSACTION_MODE_COMMENT = SD.GenerateName(rand.Next(4, 9));
+                    ctr.PURPOSE_OF_TRANSACTION = SD.ListOfReason.ElementAt(rand.Next(0, SD.ListOfReason.Count() - 1));
                     if (homeVM.fromentityaccount || homeVM.toentityaccount)
                     {
                         // entity above 10m 
@@ -134,14 +139,19 @@ namespace CARPDataGenerator.Controllers
                         ctr.FROM_INSTITUTION_CODE = ctr.FROM_INSTITUTION_NAME.Substring(0, 3) + rand.Next(150, 200);
                         ctr.FROM_INSTITUTION_SWIFT = ctr.FROM_INSTITUTION_NAME.Substring(0, 3) + rand.Next(1500, 2000);
                         ctr.FROM_INSTITUTION_BRANCH = ctr.FROM_INSTITUTION_CODE + ctr.TRANSACTION_LOCATION;
+                        ctr.FROM_INSTITUTION_BRANCH_CODE = ctr.FROM_INSTITUTION_BRANCH;
 
                         ctr.FROM_ACCOUNT = rand.Next(1000000000, 2076543210).ToString();
                         ctr.FROM_ACCOUNT_IBAN = "IB" + ctr.FROM_ACCOUNT;
-                        ctr.FROM_PERSONAL_ACCOUNT_TYPE = SD.AccountType[rand.Next(0, 5)];
+                        ctr.FROM_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Item; 
+                        ctr.FROM_PERSONAL_ACCOUNT_DESC = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
                         ctr.FROM_ACCOUNT_COMMENTS = SD.GenerateName(rand.Next(4, 10));
                         ctr.FROM_PERSON_GENDER = SD.Gender[rand.Next(0, 4)];
                         ctr.FROM_PERSON_TITLE = SD.Title[rand.Next(0, 4)];
-                       
+
+                        ctr.STATUS_CODE = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Item;
+                        ctr.STATUS_DESC = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Description;
+
 
                         //from account name
 
@@ -165,6 +175,7 @@ namespace CARPDataGenerator.Controllers
                         ctr.FROM_PERSON_TPH_CONTACT_TYPE = "PRIVATE";
                         ctr.FROM_PERSON_EMPLOYER_TPH_COMMUNICATION_TYPE = "Mobile Phone";
                         ctr.FROM_PERSON_COUNTRY_PREFIX = "+234";
+                        ctr.FROM_PERSON_TPH_EXTENSION = "";
 
                         ctr.FROM_PERSON_NUMBER = rand.Next(7000, 9000) + "" + rand.Next(40000, 90000);
                         ctr.FROM_PERSON_ADDRESS_TYPE = "Private";
@@ -175,6 +186,7 @@ namespace CARPDataGenerator.Controllers
                         ctr.FROM_PERSON_STATE = SD.ListOfState[rand.Next(0, 9)];
                         ctr.FROM_PERSON_NATIONALITY1 = "NIG";
                         ctr.FROM_PERSON_NATIONALITY2 = "NIG";
+                        ctr.FROM_PERSON_NATIONALITY3 = "";
                         ctr.FROM_PERSON_RESIDENCE = "Home";
 
                         ctr.FROM_PERSON_EMAIL1 = firstName + ctr.FROM_PERSON_MIDDLE_NAME + "@email.com";
@@ -194,7 +206,9 @@ namespace CARPDataGenerator.Controllers
                         {
                             ctr.FROM_ENTITY_NAME = SD.ListOfInstitution.ElementAt(rand.Next(0, SD.ListOfInstitution.Count()-1));
                             ctr.FROM_ENTITY_COMMERCIAL_NAME = ctr.FROM_ENTITY_NAME;
-                            ctr.FROM_PERSONAL_ACCOUNT_TYPE = SD.AccountType[rand.Next(0, 5)];
+                            ctr.FROM_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                            ctr.FROM_PERSONAL_ACCOUNT_DESC = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
+
 
 
 
@@ -211,17 +225,24 @@ namespace CARPDataGenerator.Controllers
                             ctr.FROM_PERSON_COUNTRY_PREFIX = "+234";
                             ctr.FROM_ENTITY_NUMBER = rand.Next(187650, 987650) + "" + rand.Next(187650, 987650);
                             ctr.FROM_ENTITY_ADDRESS_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                            ctr.FROM_ENTITY_ADDRESS_DESC = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
                             string city = SD.ListOfState.ElementAt(rand.Next(0, SD.ListOfState.Count() - 1));
                             ctr.FROM_ENTITY_ADDRESS = rand.Next(0, 500) + "- " + SD.GenerateName(rand.Next(4, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + city + "- Nigeria";
                             ctr.FROM_ENTITY_CITY = city;
                             ctr.FROM_ENTITY_COUNTRY_CODE = ctr.FROM_COUNTRY;
                             ctr.FROM_ENTITY_STATE = city;
                             ctr.FROM_ENTITY_EMAIL = ctr.FROM_ENTITY_NAME + "@email.com";
+                            ctr.FROM_ENTITY_URL = ctr.FROM_ENTITY_COMMERCIAL_NAME + ".com";
+                            ctr.FROM_ENTITY_BUSINESS_CLOSED = false;
+
+
                             ctr.FROM_ENTITY_INCORPORATION_STATE = city;
                             ctr.FROM_ENTITY_TAX_NUMBER = "TIN" + rand.Next(1000000, 9000000);
                             ctr.FROM_ENTITY_TAX_REG_NUMBER = "REG" + rand.Next(10009000, 89000000);
                             ctr.FROM_ENTITY_INCORPORATION_COUNTRY_CODE = "NG";
                             ctr.FROM_ENTITY_COMMENTS = SD.GenerateName(rand.Next(2, 7));
+
+
 
 
 
@@ -242,9 +263,15 @@ namespace CARPDataGenerator.Controllers
                         ctr.FROM_INSTITUTION_BRANCH = rand.Next(150, 200) + ctr.FROM_INSTITUTION_NAME.Substring(0, 3) + rand.Next(1, 20);
 
                         ctr.FROM_ACCOUNT = rand.Next(1000000000, 2076543210).ToString();
-                        ctr.FROM_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
+                        ctr.FROM_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                        ctr.FROM_PERSONAL_ACCOUNT_DESC = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
+
                         ctr.FROM_ACCOUNT_COMMENTS = SD.GenerateName(rand.Next(4, 10));
                         ctr.FROM_CURRENCY_CODE = "NGN";
+
+                        ctr.STATUS_CODE = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Item;
+                        ctr.STATUS_DESC = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Description;
+
 
                         // from account name
                         //String firstName = "PAUL";
@@ -280,7 +307,9 @@ namespace CARPDataGenerator.Controllers
                         ctr.FROM_PERSON_COUNTRY_PREFIX = "+234";
                         
                         ctr.FROM_PERSON_NUMBER = rand.Next(7000, 9000) + "" + rand.Next(40000, 90000);
-                        ctr.FROM_PERSON_ADDRESS_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 4)).Description;
+                        ctr.FROM_ENTITY_ADDRESS_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                        ctr.FROM_ENTITY_ADDRESS_DESC = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
+
                         ctr.FROM_PERSON_CITY = SD.ListOfState[rand.Next(0, 9)];
                         ctr.FROM_PERSON_ADDRESS= rand.Next(0, 500) + "- " + SD.GenerateName(rand.Next(3, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + ctr.FROM_PERSON_CITY + "- Nig";
                         ctr.FROM_PERSON_TOWN = SD.ListOfLocalGov[rand.Next(0, 9)];
@@ -300,9 +329,13 @@ namespace CARPDataGenerator.Controllers
                         ctr.FROM_PERSON_EMPLOYER_ADDRESS = rand.Next(0, 200) + "- " + SD.GenerateName(rand.Next(2, 6)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + ctr.FROM_PERSON_CITY + "- Nigeria";
                         ctr.FROM_PERSON_EMPLOYER_CITY = ctr.FROM_PERSON_CITY;
                         ctr.FROM_PERSON_EMPLOYER_COUNTRY_CODE = "NG";
+                        ctr.FROM_PERSON_EMPLOYER_ADDRESS_COMMENTS = SD.GenerateName(rand.Next(6, 9));
                         ctr.FROM_PERSON_EMPLOYER_STATE = ctr.FROM_PERSON_CITY;
+                        ctr.FROM_PERSON_EMPLOYER_TPH_COMMUNICATION_TYPE = _db.LookupCommunicationType.ToList().ElementAt(rand.Next(0, 4)).Description;
                         ctr.FROM_PERSON_EMPLOYER_TPH_CONTACT_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 4)).Description;
                         ctr.FROM_PERSON_EMPLOYER_NUMBER = rand.Next(700, 900) + "" + rand.Next(10000, 90000);
+                        ctr.FROM_PERSON_EMPLOYER_COUNTRY_PREFIX = "+234";
+                        ctr.DECEASED = false;
                         
                         
                         ctr.FROM_PERSON_TAX_NUMBER= "TIN" + rand.Next(1000099, 8500000);
@@ -321,44 +354,48 @@ namespace CARPDataGenerator.Controllers
 
 
 
-                        ftr.CustomerType = "INDIVIDUAL";
+                        ctr.FROM_CUSTOMER_TYPE = "INDIVIDUAL";
                         ftr.RegistrationNumber = ctr.FROM_INSTITUTION_NAME.Replace(" ", "").Substring(0, 3) + "-" + Guid.NewGuid().ToString().Substring(0, 6);
 
                         string usercity = SD.ListOfState.ElementAt(rand.Next(0, SD.ListOfState.Count() - 1));
                         ftr.SecondLineAddress = rand.Next(0, 500) + "- " + SD.GenerateName(rand.Next(4, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + usercity;
                         ftr.LocalGovernment = SD.ListOfLocalGov.ElementAt(rand.Next(0, SD.ListOfLocalGov.Count() - 1));
                         ftr.LinkedAccounts = rand.Next(23456, 65435) + "" + rand.Next(23456, 65435);
+                        ftr.PurposeOfTransaction = SD.ListOfReason.ElementAt(rand.Next(0, SD.ListOfReason.Count() - 1));
+                        ftr.NameOfSender = ctr.FROM_PERSON_FIRST_NAME + ctr.FROM_PERSON_LAST_NAME;
                         ftr.FirstName = ctr.FROM_PERSON_FIRST_NAME;
                         ftr.MiddleName = ctr.FROM_PERSON_MIDDLE_NAME;
                         ftr.Nationality = ctr.FROM_PERSON_NATIONALITY1;
                         ftr.DateOfBirth = ctr.FROM_PERSON_BIRTHDATE;
                         ftr.TypeOfIdentification = _db.LookupIdentifierType.ToList().ElementAt(rand.Next(0, 6)).Description;
                         ftr.IdentificationNo = "ID" + SD.GenerateName(3) + rand.Next(2009845, 3000000);
-                        ftr.DateOfIssue= SD.GetRandomDate(startRange, endRange);
-                        ftr.PlaceOfIssue =  ftr.LocalGovernment;
+                        ftr.DateOfIssue = SD.GetRandomDate(startRange, endRange);
+                        ftr.PlaceOfIssue = ftr.LocalGovernment;
                         ftr.IssuingAuthority = "Govt";
                         ftr.State = SD.ListOfState[rand.Next(1, 9)];
                         ftr.Email = ftr.SurnameOrNameOfOrganisation + "@mail.com";
                         ftr.SourceOfFunds = SD.ListOfSourceOfWealth[rand.Next(1, 4)];
 
 
-                        ftr.PurposeOfTransaction = SD.ListOfReason.ElementAt(rand.Next(0, SD.ListOfReason.Count() - 1));
+                        
 
                         usercity = SD.ListOfState.ElementAt(rand.Next(0, SD.ListOfState.Count() - 1));
                         ftr.AddressOfBeneficiary = rand.Next(0, 500) + "- " + SD.GenerateName(rand.Next(4, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + usercity + "- Nigeria";
                         usercity = SD.ListOfState.ElementAt(rand.Next(0, SD.ListOfState.Count() - 1));
                         ftr.AddressOfSender = rand.Next(0, 500) + "- " + SD.GenerateName(rand.Next(4, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + usercity + "- Nigeria";
 
-                        ftr.CMO = "MERIT BANK  ";
+                        ctr.FROM_CMO = "MERIT BANK  ";
                         ftr.TransactionNumber = ctr.TRANSACTION_NUMBER;
-                        ftr.ReferenceNumber = "MRT-" + ctr.TRANSACTION_NUMBER.Substring(5, 4);
+                        ftr.ReferenceNumber = ctr.REFERENCE_NUMBER;
                         ftr.ForSourceTransaction = true;
+                        ftr.ForDestinationTransaction = true;
 
                         if (homeVM.fromentityaccount)
                         {
 
-                            ftr.CustomerType = "INSTIITUTIONAL";
-                            ctr.FROM_PERSONAL_ACCOUNT_TYPE = SD.AccountType[rand.Next(0, 5)];
+                            ctr.FROM_CUSTOMER_TYPE = "INSTIITUTIONAL";
+                            ctr.FROM_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                            ctr.FROM_PERSONAL_ACCOUNT_DESC = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
 
                             ctr.FROM_ENTITY_NAME = SD.ListOfEntities.ElementAt(rand.Next(0, SD.ListOfEntities.Count() - 1));
                             ctr.FROM_ENTITY_INCORPORATION_LEGAL_FORM = SD.LegalForm.ElementAt(rand.Next(0, SD.LegalForm.Count() - 1));
@@ -370,6 +407,8 @@ namespace CARPDataGenerator.Controllers
                             ctr.FROM_PERSON_COUNTRY_PREFIX = "+234";
                             ctr.FROM_ENTITY_NUMBER = rand.Next(187650, 987650) + "" + rand.Next(187650, 987650);
                             ctr.FROM_ENTITY_ADDRESS_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                            ctr.FROM_ENTITY_ADDRESS_DESC = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
+
                             string city = SD.ListOfState.ElementAt(rand.Next(0, SD.ListOfState.Count() - 1));
                             ctr.FROM_ENTITY_ADDRESS = rand.Next(0, 500) + "- " + SD.GenerateName(rand.Next(4, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + city + "- Nigeria";
                             ctr.FROM_ENTITY_CITY = city;
@@ -381,6 +420,8 @@ namespace CARPDataGenerator.Controllers
                             ctr.FROM_ENTITY_TAX_REG_NUMBER = "REG" + rand.Next(10009000, 89000000);
                             ctr.FROM_ENTITY_INCORPORATION_COUNTRY_CODE = "NG";
                             ctr.FROM_ENTITY_COMMENTS = SD.GenerateName(rand.Next(2, 7));
+                            ctr.FROM_ENTITY_URL = ctr.FROM_ENTITY_COMMERCIAL_NAME + ".com";
+                            ctr.FROM_ENTITY_BUSINESS_CLOSED = false;
 
 
 
@@ -454,7 +495,11 @@ namespace CARPDataGenerator.Controllers
                             personSignatory.NATIONALITY2 = "NG";  // SD.ListOfCountries.ElementAt(rand.Next(0, SD.ListOfCountries.Count() - 1));
 
                             personSignatory.EMAIL1 = firstName + "@email.com";
-
+                            personSignatory.BVN = rand.Next(100010010, 900000000).ToString() + rand.Next(10, 99).ToString();
+                            personSignatory.CCI = rand.Next(202010010, 900000000).ToString() + rand.Next(10, 99).ToString();
+                            personSignatory.TIN = "TIN" + rand.Next(1000099, 8500000);
+                            personSignatory.ID_NUMBER = ctr.FROM_PERSON_ID_NUMBER;
+                            personSignatory.DECEASED = ctr.DECEASED;
 
                             // employers info
 
@@ -529,6 +574,7 @@ namespace CARPDataGenerator.Controllers
 
                         ctr.BALANCE = rand.Next(1000000, 9000000);
                         ctr.STATUS_CODE = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Item;
+                        ctr.STATUS_DESC = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Description;
 
                         ctr.BENEFICIARY = SD.GenerateName(rand.Next(3, 8)) + " " + SD.GenerateName(rand.Next(3, 8));
                         DateTime startDateRange = Convert.ToDateTime(rand.Next(1, 10) + "/" + rand.Next(1, 26) + "/" + rand.Next(1977, 1990) + " " + rand.Next(10, 20) + ":10:01");
@@ -651,24 +697,34 @@ namespace CARPDataGenerator.Controllers
 
                     if (homeVM.to.Equals("toaccount"))
                     {
+
+                        
                         ctr.TO_INSTITUTION_NAME = SD.ListOfInstitution.ElementAt(rand.Next(0, SD.ListOfInstitution.Count() - 1));
                         ctr.TO_INSTITUTION_CODE = ctr.TO_INSTITUTION_NAME.Substring(0, 3) + rand.Next(150, 200);
                         ctr.TO_INSTITUTION_SWIFT = ctr.TO_INSTITUTION_NAME.Substring(0, 3) + rand.Next(1500, 2000);
-                        
+                        ctr.TO_INSTITUTION_BRANCH = ctr.TO_INSTITUTION_CODE + ctr.TRANSACTION_LOCATION;
+                        ctr.TO_INSTITUTION_BRANCH_CODE = ctr.TO_INSTITUTION_BRANCH;
 
                         ctr.TO_ACCOUNT = rand.Next(1000000000, 2076543210).ToString();
                         ctr.TO_ACCOUNT_IBAN = "IB" + ctr.TO_ACCOUNT;
-                        ctr.TO_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
+                        ctr.TO_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 4)).Item;
+                        ctr.TO_PERSONAL_ACCOUNT_DESC = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 4)).Description;
+                        ctr.TO_ACCOUNT_COMMENTS = SD.GenerateName(rand.Next(4, 10));
+                      
+                        
 
-
+                       
                         // to account name
                         String firstName = SD.GenerateName(rand.Next(4, 8));
                         String lastName = SD.GenerateName(rand.Next(3, 8));
 
                         ctr.TO_ACCOUNT_NAME = firstName + " " + lastName;
-                        ctr.TO_STATUS_CODE = "ACTIVE";
+                        ctr.TO_STATUS_CODE = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Item;
+                        ctr.TO_STATUS_DESC = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Description;
+
                         ctr.TO_PERSON_GENDER = SD.Gender[rand.Next(0, 5)];
                         ctr.TO_PERSON_TITLE = SD.Title[rand.Next(0, 5)];
+                        ctr.TO_CLIENT_NUMBER = rand.Next(100000000, 900000000).ToString() + rand.Next(10, 99).ToString(); // 11 digits number only
                         ctr.TO_PERSON_FIRST_NAME = firstName;
                         ctr.TO_PERSON_LAST_NAME = lastName;
                         ctr.TO_PERSON_MIDDLE_NAME = SD.GenerateName(rand.Next(4, 9));
@@ -678,10 +734,11 @@ namespace CARPDataGenerator.Controllers
                         DateTime endRange = Convert.ToDateTime(rand.Next(1, 10) + "/" + rand.Next(1, 26) + "/" + rand.Next(1997, 2009) + " " + rand.Next(10, 20) + ":10:01");
                         ctr.TO_PERSON_BIRTHDATE = SD.GetRandomDate(startRange, endRange);
                         ctr.TO_PERSON_BIRTH_PLACE = SD.ListOfState[rand.Next(0, 5)];
-                        //ctr.TO_PERSON_SSN  = "SSN" + rand.Next(1000000, 7000000).ToString() + rand.Next(10, 99).ToString();
+                        ctr.TO_PERSON_SSN  = "SSN" + rand.Next(1000000, 7000000).ToString() + rand.Next(10, 99).ToString();
                         ctr.TO_PERSON_PASSPORT_NUMBER = "NG" + rand.Next(20050000, 70005000).ToString() + rand.Next(10, 99).ToString();
                         ctr.TO_PERSON_PASSPORT_COUNTRY = "NG";
-                        ctr.TO_PERSON_TPH_CONTACT_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
+                        ctr.TO_PERSON_ID_NUMBER = "NG" + rand.Next(1000000, 8000000).ToString() + rand.Next(10, 99).ToString();
+                        ctr.TO_PERSON_TPH_CONTACT_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 1)).Description;
 
                         ctr.TO_PERSON_COUNTRY_PREFIX = "+234";
                         ctr.TO_PERSON_NUMBER = rand.Next(5000, 9000) + "" + rand.Next(20000, 90000);
@@ -698,19 +755,21 @@ namespace CARPDataGenerator.Controllers
 
 
                         ctr.TO_PERSON_EMAIL1 = firstName + ctr.TO_PERSON_MIDDLE_NAME + "@email.com";
-                        //ctr.TO_PERSON_EMAIL2 = firstName + ctr.TO_PERSON_MIDDLE_NAME + "@email.com";
-                        //ctr.TO_PERSON_EMAIL3 = lastName + ctr.TO_PERSON_MIDDLE_NAME + "@email.com";
+                        ctr.TO_PERSON_EMAIL2 = firstName + ctr.TO_PERSON_MIDDLE_NAME + "@email.com";
+                        ctr.TO_PERSON_EMAIL3 = lastName + ctr.TO_PERSON_MIDDLE_NAME + "@email.com";
                         ctr.TO_PERSON_OCCUPATION = SD.ListOfOccupation[rand.Next(0, 4)];
                         ctr.TO_PERSON_EMPLOYER_NAME = SD.GenerateName(rand.Next(5, 10));
                         ctr.TO_PERSON_EMPLOYER_ADDRESS_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
                         ctr.TO_PERSON_EMPLOYER_ADDRESS = rand.Next(0, 200) + "- " + SD.GenerateName(rand.Next(2, 6)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + ctr.TO_PERSON_CITY + "- Nigeria";
-                        //ctr.TO_PERSON_EMPLOYER_CITY = ctr.TO_PERSON_CITY;
-                        //ctr.TO_PERSON_EMPLOYER_COUNTRY_CODE = "NG";
-                        //ctr.TO_PERSON_EMPLOYER_STATE = ctr.TO_PERSON_CITY;
-                        //ctr.TO_PERSON_EMPLOYER_TPH_CONTACT_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
+                        ctr.TO_PERSON_EMPLOYER_CITY = ctr.TO_PERSON_CITY;
+                        ctr.TO_PERSON_EMPLOYER_COUNTRY_CODE = "NG";
+                        ctr.TO_PERSON_EMPLOYER_STATE = ctr.TO_PERSON_CITY;
+                        ctr.TO_PERSON_EMPLOYER_TPH_CONTACT_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
                         ctr.TO_PERSON_EMPLOYER_NUMBER = rand.Next(700, 900) + "" + rand.Next(10000, 90000);
                         ctr.TO_PERSON_TAX_REG_NUMBER = "TIN" + rand.Next(1000099, 8500000);
                         ctr.TO_PERSON_SOURCE_OF_WEALTH = SD.ListOfSourceOfWealth[rand.Next(0, 6)];
+                        ctr.TO_PERSON_DECEASED = false;
+
 
 
 
@@ -719,7 +778,8 @@ namespace CARPDataGenerator.Controllers
                         {
                             ctr.TO_ENTITY_NAME = SD.ListOfInstitution.ElementAt(rand.Next(0, SD.ListOfInstitution.Count() - 1));
                             ctr.TO_ENTITY_COMMERCIAL_NAME = ctr.TO_ENTITY_NAME;
-                            ctr.TO_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description; ;
+                            ctr.TO_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                            ctr.TO_PERSONAL_ACCOUNT_DESC = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
 
                             ctr.TO_ENTITY_INCORPORATION_LEGAL_FORM = SD.LegalForm.ElementAt(rand.Next(0, SD.LegalForm.Count() - 1));
                             ctr.TO_ENTITY_INCORPORATION_NUMBER = ctr.TO_ENTITY_NAME.Replace(" ", "").Substring(0, 4) + ctr.TRANSACTION_NUMBER.Substring(5, 3);
@@ -730,12 +790,14 @@ namespace CARPDataGenerator.Controllers
                             ctr.TO_PERSON_COUNTRY_PREFIX = "+234";
                             ctr.TO_ENTITY_NUMBER = rand.Next(187650, 987650) + "" + rand.Next(187650, 987650);
                             ctr.TO_ENTITY_ADDRESS_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                            ctr.TO_ENTITY_ADDRESS_DESC = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
                             string city = SD.ListOfState.ElementAt(rand.Next(0, SD.ListOfState.Count() - 1));
                             ctr.TO_ENTITY_ADDRESS = rand.Next(0, 500) + "- " + SD.GenerateName(rand.Next(4, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + city + "- Nigeria";
                             ctr.TO_ENTITY_CITY = city;
                             ctr.TO_ENTITY_COUNTRY_CODE = ctr.TO_COUNTRY_CODE; ;
                             ctr.TO_ENTITY_STATE = city;
                             ctr.TO_ENTITY_EMAIL = ctr.TO_ENTITY_NAME + "@email.com";
+                            ctr.TO_ENTITY_URL = ctr.TO_ENTITY_COMMERCIAL_NAME + ".COM";
                             ctr.TO_ENTITY_INCORPORATION_STATE = city;
                             ctr.TO_ENTITY_TAX_NUMBER = "TIN" + rand.Next(1000000, 9000000);
                             ctr.TO_ENTITY_TAX_REG_NUMBER = "REG" + rand.Next(10009000, 89000000);
@@ -758,7 +820,8 @@ namespace CARPDataGenerator.Controllers
 
                         ctr.TO_ACCOUNT = rand.Next(1000000000, 2076543210).ToString();
                         ctr.TO_ACCOUNT_IBAN = "IB" + ctr.TO_ACCOUNT;
-                        ctr.TO_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
+                        ctr.TO_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Item;
+                        ctr.TO_PERSONAL_ACCOUNT_DESC = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
 
                         ctr.TO_CURRENCY_CODE = "NGN";
 
@@ -791,6 +854,7 @@ namespace CARPDataGenerator.Controllers
 
                         ctr.TO_PERSON_NUMBER = rand.Next(5000, 9000) + "" + rand.Next(20000, 90000);
                         ctr.TO_PERSON_ADDRESS_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description;
+                        
                         ctr.TO_PERSON_CITY = SD.ListOfState[rand.Next(1, 9)];
                         ctr.TO_PERSON_STATE = ctr.TO_PERSON_CITY;
                         ctr.TO_PERSON_ADDRESS = rand.Next(1, 500) + "- " + SD.GenerateName(rand.Next(3, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + ctr.TO_PERSON_CITY + "- Nig";
@@ -823,7 +887,7 @@ namespace CARPDataGenerator.Controllers
 
                         ftr = new FTR();
 
-                        ftr.CustomerType = "INDIVIDUAL";
+                        ctr.TO_CUSTOMER_TYPE = "INDIVIDUAL";
                         ftr.RegistrationNumber = ctr.TO_INSTITUTION_NAME.Replace(" ", "").Substring(0, 3) + "-" + Guid.NewGuid().ToString().Substring(0, 6);
 
                         string usercity = SD.ListOfState.ElementAt(rand.Next(0, SD.ListOfState.Count() - 1));
@@ -850,16 +914,17 @@ namespace CARPDataGenerator.Controllers
                         usercity = SD.ListOfState.ElementAt(rand.Next(0, SD.ListOfState.Count() - 1));
                         ftr.AddressOfSender = rand.Next(0, 500) + "- " + SD.GenerateName(rand.Next(4, 9)) + " " + SD.StreetType.ElementAt(rand.Next(0, SD.StreetType.Count() - 1)) + " - " + usercity + "- Nigeria";
 
-                        ftr.CMO = "MERIT BANK";
+                        ctr.TO_CMO = "MERIT BANK";
                         ftr.TransactionNumber = ctr.TRANSACTION_NUMBER;
                         ftr.ReferenceNumber = "MRT-" + ctr.TRANSACTION_NUMBER.Substring(5, 4);
                         ftr.ForDestinationTransaction = true;
 
                         if (homeVM.toentityaccount)
                         {
-                            ftr.CustomerType = "INSTIITUTIONAL";
+                            ctr.TO_CUSTOMER_TYPE = "INSTIITUTIONAL";
 
-                            ctr.TO_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description; ;
+                            ctr.TO_PERSONAL_ACCOUNT_DESC = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Description;
+                            ctr.TO_PERSONAL_ACCOUNT_TYPE = _db.LookupAccountType.ToList().ElementAt(rand.Next(0, 3)).Item;
 
                             ctr.TO_ENTITY_NAME =  SD.ListOfEntities.ElementAt(rand.Next(0, SD.ListOfEntities.Count() - 1));
                             ctr.TO_ENTITY_INCORPORATION_LEGAL_FORM = SD.LegalForm.ElementAt(rand.Next(0, SD.LegalForm.Count() - 1));
@@ -947,10 +1012,12 @@ namespace CARPDataGenerator.Controllers
 
                             personSignatory.FOR_DESTINATION_TRANSACTION = true;
                             personSignatory.FOR_SIGNATORY_RECORD = true;
+                            
                             personSignatory.TRANSACTION_NUMBER = ctr.TRANSACTION_NUMBER;
                             Guid guid = Guid.NewGuid();
                             personSignatory.SIGNATORY_OR_DIRECTOR_ID = guid.ToString();
 
+                            //personSignatory.ROLE = SD.
                             personSignatory.GENDER = SD.Gender.ElementAt(rand.Next(0, SD.Gender.Count() - 1));
 
                             personSignatory.TITLE = SD.Title.ElementAt(rand.Next(0, SD.Title.Count() - 1));
@@ -963,6 +1030,9 @@ namespace CARPDataGenerator.Controllers
                             personSignatory.NATIONALITY2 = SD.ListOfCountries.ElementAt(rand.Next(0, SD.ListOfCountries.Count() - 1));
 
                             personSignatory.EMAIL1 = firstName + "@email.com";
+                            personSignatory.BVN = rand.Next(100010010, 900000000).ToString() + rand.Next(10, 99).ToString();
+                            personSignatory.CCI = rand.Next(202010010, 900000000).ToString() + rand.Next(10, 99).ToString();
+                            personSignatory.TIN = "TIN" + rand.Next(1000099, 8500000);
 
 
                             // employers info
@@ -985,6 +1055,7 @@ namespace CARPDataGenerator.Controllers
                             personSignatory.BIRTHDATE = SD.GetRandomDate(BstartRange, BendRange);
 
                             personSignatory.SSN = rand.Next(100000000, 900000000).ToString() + rand.Next(10, 99).ToString();
+                            personSignatory.ID_NUMBER = ctr.TO_PERSON_ID_NUMBER;
 
                             // phones
                             personSignatory.SIGNATORY_OR_DIRECTOR_TPH_CONTACT_TYPE = _db.LookupContactType.ToList().ElementAt(rand.Next(0, 3)).Description; // has only 4 records
@@ -1010,6 +1081,9 @@ namespace CARPDataGenerator.Controllers
                             personSignatory.OCCUPATION = SD.ListOfOccupation.ElementAt(rand.Next(0, SD.ListOfOccupation.Count() - 1));
 
                             personSignatory.SOURCE_OF_WEALTH = SD.ListOfSourceOfWealth.ElementAt(rand.Next(0, 3));
+                            
+
+
 
                             _db.TransactionSignatoryOrDirector.Add(personSignatory);
                             // SIGNATORY end
@@ -1037,6 +1111,7 @@ namespace CARPDataGenerator.Controllers
                         }
 
                         ctr.TO_BALANCE = rand.Next(1000000, 9000000);
+                        ctr.TO_DATE_BALANCE = homeVM.EndDate;
                         ctr.TO_STATUS_CODE = _db.LookupAccountStatusType.ToList().ElementAt(rand.Next(0, 1)).Description;
 
                         ctr.TO_BENEFICIARY = SD.GenerateName(rand.Next(3, 8)) + " " + SD.GenerateName(rand.Next(3, 8));

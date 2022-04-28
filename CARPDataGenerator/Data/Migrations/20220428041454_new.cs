@@ -2,7 +2,7 @@
 
 namespace CARPDataGenerator.Data.Migrations
 {
-    public partial class database : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

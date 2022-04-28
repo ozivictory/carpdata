@@ -118,10 +118,16 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(11)")
                         .HasMaxLength(11);
 
+                    b.Property<string>("FROM_CMO")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FROM_COUNTRY")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_CURRENCY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_CUSTOMER_TYPE")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_ENTITY_ADDRESS")
@@ -131,6 +137,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("FROM_ENTITY_ADDRESS_COMMENTS")
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
+
+                    b.Property<string>("FROM_ENTITY_ADDRESS_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_ENTITY_ADDRESS_TYPE")
                         .HasColumnType("nvarchar(max)");
@@ -250,6 +259,9 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
+                    b.Property<string>("FROM_INSTITUTION_BRANCH_CODE")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FROM_INSTITUTION_CODE")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -264,6 +276,9 @@ namespace CARPDataGenerator.Data.Migrations
 
                     b.Property<bool?>("FROM_NON_BANK_INSTUTION")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FROM_PERSONAL_ACCOUNT_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_PERSONAL_ACCOUNT_TYPE")
                         .HasColumnType("nvarchar(max)");
@@ -486,7 +501,16 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<DateTime?>("OPENED")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("PURPOSE_OF_TRANSACTION")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("REFERENCE_NUMBER")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("STATUS_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("STATUS_DESC")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TELLER")
@@ -527,10 +551,16 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<DateTime?>("TO_CLOSED")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("TO_CMO")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TO_COUNTRY_CODE")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TO_CURRENCY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_CUSTOMER_TYPE")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("TO_DATE_BALANCE")
@@ -543,6 +573,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("TO_ENTITY_ADDRESS_COMMENTS")
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
+
+                    b.Property<string>("TO_ENTITY_ADDRESS_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TO_ENTITY_ADDRESS_TYPE")
                         .HasColumnType("nvarchar(max)");
@@ -662,6 +695,9 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
+                    b.Property<string>("TO_INSTITUTION_BRANCH_CODE")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TO_INSTITUTION_CODE")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -679,6 +715,9 @@ namespace CARPDataGenerator.Data.Migrations
 
                     b.Property<DateTime?>("TO_OPENED")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_PERSONAL_ACCOUNT_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TO_PERSONAL_ACCOUNT_TYPE")
                         .HasColumnType("nvarchar(max)");
@@ -901,6 +940,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("TO_STATUS_CODE")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TO_STATUS_DESC")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("TRANSACTION_DATE")
                         .HasColumnType("datetime2");
 
@@ -918,6 +960,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("TRANSACTION_MODE_COMMENT")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<string>("TRANSACTION_MODE_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TRANSACTION_NUMBER")
                         .HasColumnType("nvarchar(50)")
@@ -1055,12 +1100,6 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("AddressOfSender")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CMO")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool?>("ForDestinationTransaction")
                         .HasColumnType("bit");
 
@@ -1083,6 +1122,9 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecondLineAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SurnameOrNameOfOrganisation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TransactionNumber")
@@ -1213,10 +1255,16 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(11)")
                         .HasMaxLength(11);
 
+                    b.Property<string>("FROM_CMO")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FROM_COUNTRY")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_CURRENCY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FROM_CUSTOMER_TYPE")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_ENTITY_ADDRESS")
@@ -1226,6 +1274,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("FROM_ENTITY_ADDRESS_COMMENTS")
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
+
+                    b.Property<string>("FROM_ENTITY_ADDRESS_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_ENTITY_ADDRESS_TYPE")
                         .HasColumnType("nvarchar(max)");
@@ -1345,6 +1396,9 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
+                    b.Property<string>("FROM_INSTITUTION_BRANCH_CODE")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FROM_INSTITUTION_CODE")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -1359,6 +1413,9 @@ namespace CARPDataGenerator.Data.Migrations
 
                     b.Property<bool?>("FROM_NON_BANK_INSTUTION")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FROM_PERSONAL_ACCOUNT_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FROM_PERSONAL_ACCOUNT_TYPE")
                         .HasColumnType("nvarchar(max)");
@@ -1584,10 +1641,19 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<DateTime?>("OPENED")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("PURPOSE_OF_TRANSACTION")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("REASON_FOR_FLAGGING")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("REFERENCE_NUMBER")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("STATUS_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("STATUS_DESC")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TELLER")
@@ -1628,10 +1694,16 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<DateTime?>("TO_CLOSED")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("TO_CMO")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TO_COUNTRY_CODE")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TO_CURRENCY_CODE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TO_CUSTOMER_TYPE")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("TO_DATE_BALANCE")
@@ -1644,6 +1716,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("TO_ENTITY_ADDRESS_COMMENTS")
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
+
+                    b.Property<string>("TO_ENTITY_ADDRESS_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TO_ENTITY_ADDRESS_TYPE")
                         .HasColumnType("nvarchar(max)");
@@ -1763,6 +1838,9 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
+                    b.Property<string>("TO_INSTITUTION_BRANCH_CODE")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TO_INSTITUTION_CODE")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -1780,6 +1858,9 @@ namespace CARPDataGenerator.Data.Migrations
 
                     b.Property<DateTime?>("TO_OPENED")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("TO_PERSONAL_ACCOUNT_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TO_PERSONAL_ACCOUNT_TYPE")
                         .HasColumnType("nvarchar(max)");
@@ -2002,6 +2083,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("TO_STATUS_CODE")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TO_STATUS_DESC")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("TRANSACTION_DATE")
                         .HasColumnType("datetime2");
 
@@ -2019,6 +2103,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("TRANSACTION_MODE_COMMENT")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<string>("TRANSACTION_MODE_DESC")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TRANSACTION_NUMBER")
                         .HasColumnType("nvarchar(50)")
@@ -2088,6 +2175,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("TYPE")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TYPE_DESC")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.ToTable("TransactionPersonIdentification");
@@ -2110,6 +2200,12 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("BIRTH_PLACE")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
+
+                    b.Property<string>("BVN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CCI")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("DECEASED")
                         .HasColumnType("bit");
@@ -2251,6 +2347,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("RESIDENCE")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ROLE")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SIGNATORY_OR_DIRECTOR_ADDRESS")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -2260,6 +2359,9 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasMaxLength(25);
 
                     b.Property<string>("SIGNATORY_OR_DIRECTOR_ADDRESS_TYPE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_ADDRESS_TYPE_DESC")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SIGNATORY_OR_DIRECTOR_CITY")
@@ -2278,6 +2380,9 @@ namespace CARPDataGenerator.Data.Migrations
                         .HasMaxLength(4);
 
                     b.Property<string>("SIGNATORY_OR_DIRECTOR_ID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SIGNATORY_OR_DIRECTOR_LGA")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SIGNATORY_OR_DIRECTOR_NUMBER")
@@ -2325,6 +2430,9 @@ namespace CARPDataGenerator.Data.Migrations
                     b.Property<string>("TAX_REG_NUMBER")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<string>("TIN")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TITLE")
                         .HasColumnType("nvarchar(30)")

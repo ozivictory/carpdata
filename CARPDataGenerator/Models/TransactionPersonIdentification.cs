@@ -54,6 +54,7 @@ namespace CARPDataGenerator.Models
         /// Enumeration -> identifier_type
         /// </summary>
         public string TYPE { get; set; }
+        public string TYPE_DESC { get; set; }
 
         [MaxLength(length: 255)]
         public string NUMBER { get; set; }

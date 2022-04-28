@@ -41,9 +41,13 @@ namespace CARPDataGenerator.Models
         /// </summary>
         public string SIGNATORY_OR_DIRECTOR_ID { get; set; }
 
+        /// <summary>
+        /// Account person role type -> Enumerable
+        /// </summary>
+        public string ROLE { get; set; }
 
         /// <summary>
-        /// values: M or F
+        /// values: - OR M or F
         /// </summary>
         public string GENDER { get; set; }
 
@@ -121,12 +125,15 @@ namespace CARPDataGenerator.Models
         /// Enumeration -> contact_type
         /// </summary>
         public string SIGNATORY_OR_DIRECTOR_ADDRESS_TYPE { get; set; }
+        public string SIGNATORY_OR_DIRECTOR_ADDRESS_TYPE_DESC { get; set; }
 
         [MaxLength(length: 100)]
         public string SIGNATORY_OR_DIRECTOR_ADDRESS { get; set; }
 
         [MaxLength(length: 255)]
         public string SIGNATORY_OR_DIRECTOR_TOWN { get; set; }
+
+        public string SIGNATORY_OR_DIRECTOR_LGA { get; set; }
 
         [MaxLength(length: 255)]
         public string SIGNATORY_OR_DIRECTOR_CITY { get; set; }
@@ -257,6 +264,13 @@ namespace CARPDataGenerator.Models
 
         [MaxLength(length: 4000)]
         public string SIGNATORY_OR_DIRECTOR_COMMENTS { get; set; }
+
+
+
+        // Used with FTR
+        public string BVN { get; set; }
+        public string TIN { get; set; }
+        public string CCI { get; set; }
 
     }
 }
